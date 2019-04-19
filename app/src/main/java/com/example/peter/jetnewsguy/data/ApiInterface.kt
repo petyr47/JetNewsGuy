@@ -9,28 +9,23 @@ import retrofit2.http.Query
 interface ApiInterface {
 
 
-//country =us
     @GET("v2/top-headlines")
-    fun getTopNews( @Query("apiKey") key: String, @Query("country") country: String ):Deferred<Response<List<topNews>>>
+    fun getTopNews( @Query("apiKey") key: String, @Query("country") country: String ):Deferred<Response<Example>>
 
-    //county=ng
     @GET("v2/top-headlines")
-    fun getLocalNews( @Query("apiKey") key:String, @Query("country") country: String):Deferred<Response<List<localNews>>>
+    fun getLocalNews( @Query("apiKey") key:String, @Query("country") country: String):Deferred<Response<Example>>
 
 
-    //cater=technology
     @GET("v2/top-headlines")
-    fun getTechNews( @Query("apiKey") key:String, @Query("category") category: String):Deferred<Response<List<techNews>>>
+    fun getTechNews( @Query("apiKey") key:String, @Query("category") category: String):Deferred<Response<Example>>
 
 
-    //cate=sports country=gb
     @GET("v2/top-headlines")
-    fun getSportsNews( @Query("apiKey") key:String, @Query("category") category: String, @Query("country") country: String ):Deferred<Response<List<sportsNews>>>
+    fun getSportsNews( @Query("apiKey") key:String, @Query("category") category: String, @Query("country") country: String ):Deferred<Response<Example>>
 
 
-    //cate=entertainment
     @GET("v2/top-headlines")
-    fun getEnterNews( @Query("apiKey") key:String, @Query("category") category:String):Deferred<Response<List<enterNews>>>
+    fun getEnterNews( @Query("apiKey") key:String, @Query("category") category:String):Deferred<Response<Example>>
 
 
 }

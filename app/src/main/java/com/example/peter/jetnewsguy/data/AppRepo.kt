@@ -3,42 +3,16 @@ package com.example.peter.jetnewsguy.data
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 
 class AppRepo(application: Application) {
 
-    private val MenterDao: enterDao
-    private val MsportsDao:sportsDao
-    private val MtechDao: techDao
-    private val MlocalDao:localDao
-    private val MtopDao:topDao
-//
-//    var allTop: LiveData<List<topNews>>
-//    var allTech: LiveData<List<techNews>>
-//    var allSports: LiveData<List<sportsNews>>
-//    var allLocal: LiveData<List<localNews>>
-//    var allEnter: LiveData<List<enterNews>>
-
+    private val newsDao: NewsDao
 
     init {
         val database = AppDatabase.getInstance(application)
-        MenterDao=database.mEnterDao()
-        MsportsDao=database.mSportsDao()
-        MtechDao=database.mTechDao()
-        MtopDao=database.mTopDao()
-        MlocalDao=database.mLocalDao()
-//
-//        allTop=MtopDao.getAllItems()
-//        allTech=MtechDao.getAllItems()
-//        allSports=MsportsDao.getAllItems()
-//        allLocal=MlocalDao.getAllItems()
-//        allEnter=MenterDao.getAllItems()
-
+        newsDao=database.newsDao()
     }
 
 
@@ -48,7 +22,7 @@ class AppRepo(application: Application) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.IO){
                 try {
                     val topNewsRequest= service.getTopNews("564ebf9dfec4409fbdaf1327e47c1932","us")
                     val sportsNewsRequest=service.getSportsNews("564ebf9dfec4409fbdaf1327e47c1932", "sports", "gb")
@@ -64,13 +38,36 @@ class AppRepo(application: Application) {
                         val enterNewsResult=enterNewsRequest.await().body()
                         val localNewsResult=localNewsRequest.await().body()
 
-                        MlocalDao.updateData(localNewsResult)
-                        MtopDao.updateData(topNewsResult)
-                        MtechDao.updateData(techNewsResult)
-                        MsportsDao.updateData(sportsNewsResult)
-                        MenterDao.updateData(enterNewsResult)
+                        newsDao.deleteAll()
 
+                        var topNewsArticles=makeArticle(topNewsResult)
+                        var sportsNewsArticles=makeArticle(sportsNewsResult)
+                        var techNewsArticles=makeArticle(techNewsResult)
+                        var enterNewsArticles=makeArticle(enterNewsResult)
+                        var localNewsArticles =makeArticle(localNewsResult)
 
+                        if (!topNewsArticles.isNullOrEmpty()){
+                            topNewsArticles=fixCategory(topNewsArticles, "top")
+                        }
+                        if (!sportsNewsArticles.isNullOrEmpty()){
+                            sportsNewsArticles=fixCategory(sportsNewsArticles, "sports")
+                        }
+                        if (!techNewsArticles.isNullOrEmpty()){
+                            techNewsArticles=fixCategory(techNewsArticles, "tech")
+                        }
+                        if (!enterNewsArticles.isNullOrEmpty()){
+                            enterNewsArticles=fixCategory(enterNewsArticles, "entertainment")
+                        }
+                        if (!localNewsArticles.isNullOrEmpty()){
+                            localNewsArticles=fixCategory(localNewsArticles, "local")
+
+                        }
+
+                        newsDao.insertAll(topNewsArticles!!)
+                        newsDao.insertAll(sportsNewsArticles!!)
+                        newsDao.insertAll(techNewsArticles!!)
+                        newsDao.insertAll(enterNewsArticles!!)
+                        newsDao.insertAll(localNewsArticles!!)
                     }
 
                     else{
@@ -81,10 +78,25 @@ class AppRepo(application: Application) {
                 catch (e:HttpException){
                     Log.e("App Repo Catch Block", e.message())
                 }
-
             }
         }
     }
 
+    private fun fixCategory(news:List<Article>, category: String):List<Article>{
+
+        Log.e("Fix cat", "lenght of raw list"+news.size)
+        for (new in news){
+            new.category=category
+        }
+        return news
+    }
+
+    private fun makeArticle(list :Example?):List<Article>? =list?.articles
+
+     fun retrieveFromRoom(key: String):
+             List<Article> = runBlocking{
+
+         newsDao.getNews(key)
+     }
 
 }

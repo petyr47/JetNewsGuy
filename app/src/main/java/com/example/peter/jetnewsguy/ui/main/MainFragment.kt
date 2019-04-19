@@ -30,7 +30,8 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
 
         GlobalScope.launch (Dispatchers.Main){
@@ -40,22 +41,5 @@ class MainFragment : Fragment() {
         }
 
     }
-//
-//    fun loadDataAsync() = async(UI) {
-//        try {
-//            //Turn on busy indicator.
-//            val job = async(CommonPool) {
-//                //We're on a background thread here.
-//                //Execute blocking calls, such as retrofit call.execute().body() + caching.
-//            }
-//            job.await();
-//            //We're back on the main thread here.
-//            //Update UI controls such as RecyclerView adapter data.
-//        }
-//        catch (e: Exception) {
-//        }
-//        finally {
-//            //Turn off busy indicator.
-//        }
 
 }

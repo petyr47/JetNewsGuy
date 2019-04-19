@@ -6,15 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [enterNews::class, localNews::class, sportsNews::class, techNews::class, topNews::class], version = 1, exportSchema = false)
+@Database(entities = [Article::class], version = 3, exportSchema = false)
 abstract class AppDatabase:RoomDatabase() {
 
-    //Daos
-    abstract fun mEnterDao():enterDao
-    abstract fun mLocalDao():localDao
-    abstract fun mSportsDao():sportsDao
-    abstract fun mTechDao():techDao
-    abstract fun mTopDao():topDao
+    abstract fun newsDao():NewsDao
+
 
     companion object {
         @Volatile private var instance: AppDatabase? =null

@@ -3,4 +3,18 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorInactive">#BDBDBD</color>
+
+    <color name="colorInactiveLocal">#9CCC65</color>
+    <color name="colorInactiveTech">#42A5F5</color>
+    <color name="colorInactiveSports">#FF7043</color>
+    <color name="colorInactiveEnter">#EC407A</color>
+    <color name="colorInactiveTop">#5C6BC0</color>
+
+    <color name="colorActiveLocal">#558B2F</color>
+    <color name="colorActiveTech">#1565C0</color>
+    <color name="colorActiveSports">#D84315</color>
+    <color name="colorActiveEnter">#AD1457</color>
+    <color name="colorActiveTop">#283593</color>
+
 </resources>

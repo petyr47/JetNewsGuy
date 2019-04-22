@@ -25,9 +25,9 @@ class AppRepo(application: Application) {
             withContext(Dispatchers.IO){
                 try {
                     val topNewsRequest= service.getTopNews("564ebf9dfec4409fbdaf1327e47c1932","us")
-                    val sportsNewsRequest=service.getSportsNews("564ebf9dfec4409fbdaf1327e47c1932", "sports", "gb")
-                    val techNewsRequest=service.getTechNews("564ebf9dfec4409fbdaf1327e47c1932", "technology")
-                    val enterNewsRequest=service.getEnterNews("564ebf9dfec4409fbdaf1327e47c1932", "entertainment")
+                    val sportsNewsRequest=service.getCategory("564ebf9dfec4409fbdaf1327e47c1932", "sports", "gb")
+                    val techNewsRequest=service.getCategory("564ebf9dfec4409fbdaf1327e47c1932", "technology", "us")
+                    val enterNewsRequest=service.getCategory("564ebf9dfec4409fbdaf1327e47c1932", "entertainment", "us")
                     val localNewsRequest=service.getLocalNews("564ebf9dfec4409fbdaf1327e47c1932", "ng")
 
                     if (topNewsRequest.await().isSuccessful){

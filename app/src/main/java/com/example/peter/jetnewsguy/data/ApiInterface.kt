@@ -15,10 +15,7 @@ interface ApiInterface {
     @GET("v2/top-headlines")
     fun getLocalNews( @Query("apiKey") key:String, @Query("country") country: String):Deferred<Response<Example>>
 
-
     @GET("v2/top-headlines")
     fun getCategory( @Query("apiKey") key:String, @Query("category") category: String, @Query("country") country: String ):Deferred<Response<Example>>
-
-
 
 }

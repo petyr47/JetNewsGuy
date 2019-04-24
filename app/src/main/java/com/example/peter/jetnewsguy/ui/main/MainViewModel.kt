@@ -1,18 +1,15 @@
 package com.example.peter.jetnewsguy.ui.main
 
 import android.app.Application
-import android.provider.MediaStore
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.peter.jetnewsguy.data.AppRepo
 import com.example.peter.jetnewsguy.data.Article
-import com.example.peter.jetnewsguy.data.NewsDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.example.peter.jetnewsguy.data.NewsPerferences
+import kotlinx.coroutines.*
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
@@ -24,10 +21,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     init {
         repo = AppRepo(application)
-        repo.getAndInsertData()
-
-
-        Log.e("View Model", "Init ran")
+        if (shouldSync()){repo.getAndInsertData()}
     }
 
     fun getNews(category: String):LiveData<List<Article>>{
@@ -42,7 +36,16 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         return news
     }
 
+    fun shouldSync(): Boolean{
+        val interval =1 * 3600 * 1000
+        val lastSync= NewsPerferences.getEllapsedTimeSinceLastSync(getApplication())
 
+        if (lastSync>= interval){
+            NewsPerferences.saveNewLastSyncTime(getApplication(), System.currentTimeMillis())
+            return true
+        }
+        return false
+    }
 
 
 }

@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Jet News Guy</string>
+    <string name="app_name">News Guy</string>
     <string name="api_key">564ebf9dfec4409fbdaf1327e47c1932</string>
+    <string name="pref_last_sync">key</string>
 </resources>

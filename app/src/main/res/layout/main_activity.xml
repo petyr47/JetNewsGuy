@@ -16,6 +16,7 @@
             android:layout_marginStart="16dp"
             app:cardCornerRadius="7dp"
             app:cardElevation="7dp"
+            android:id="@+id/card_bar_container"
     >
 
     <androidx.cardview.widget.CardView

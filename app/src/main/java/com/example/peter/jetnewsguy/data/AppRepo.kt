@@ -2,11 +2,10 @@ package com.example.peter.jetnewsguy.data
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 
-class AppRepo(application: Application) {
+class AppRepo(private val application: Application) {
 
     private val newsDao: NewsDao
 
@@ -68,6 +67,9 @@ class AppRepo(application: Application) {
                         newsDao.insertAll(techNewsArticles!!)
                         newsDao.insertAll(enterNewsArticles!!)
                         newsDao.insertAll(localNewsArticles!!)
+
+                        NewsPerferences.saveNewLastSyncTime(application, System.currentTimeMillis())
+
                     }
 
                     else{

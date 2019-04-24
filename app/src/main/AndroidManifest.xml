@@ -15,7 +15,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".AboutActivity"
-                  android:theme="@style/WebTheme"
+                  android:theme="@style/AppTheme"
         >
         </activity>
         <activity

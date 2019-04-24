@@ -11,6 +11,10 @@ import com.bumptech.glide.Glide
 import com.example.peter.jetnewsguy.R
 import com.example.peter.jetnewsguy.data.Article
 import kotlinx.android.synthetic.main.news_item.view.*
+import java.text.SimpleDateFormat
+import android.text.format.DateUtils
+import java.util.*
+
 
 class NewsAdapter (val list: List<Article>, val context: Context): RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
@@ -44,7 +48,7 @@ class NewsAdapter (val list: List<Article>, val context: Context): RecyclerView.
              itemView.setOnClickListener(this)
          }
 
-         fun bindNews(article: Article){
+          fun bindNews(article: Article){
              val time = fixDate(article.publishedAt)
 
              itemView.news_title?.text = article.title
@@ -56,25 +60,35 @@ class NewsAdapter (val list: List<Article>, val context: Context): RecyclerView.
          }
 
 
-         fun fixDate(dateTime: String?): String {
-             dateTime?.dropLast(1)
-             val seperated = dateTime?.split('T')
-             val date = seperated?.get(0)
-             val time = seperated?.get(1)?.dropLast(4)
+         private fun fixDate(dateTime: String?): String = timeAgo(dateTime)
 
-             return "$date, $time "
-         }
 
-         fun ImageView.glideLoad(url: String?) {
+         private fun ImageView.glideLoad(url: String?) {
 
              Glide.with(context)
                  .load(url)
-                 .placeholder(R.drawable.placeholder)
+                 .placeholder(com.example.peter.jetnewsguy.R.drawable.placeholder)
                  .into(this)
 
          }
 
+
+         private fun timeAgo(postedAt: String?): String{
+
+             val  inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+
+             val date = inputFormat.parse(postedAt)
+
+             val niceDateStr = DateUtils.getRelativeTimeSpanString(
+                 date.time,
+                 Calendar.getInstance().timeInMillis,
+                 DateUtils.MINUTE_IN_MILLIS
+             )
+             return  niceDateStr.toString()
+         }
+
     }
+
 
 }
 

@@ -17,4 +17,6 @@
     <color name="colorActiveEnter">#AD1457</color>
     <color name="colorActiveTop">#283593</color>
 
+    <color name="colorSplash">#3490dc</color>
+
 </resources>

@@ -1,11 +1,11 @@
 package com.example.peter.jetnewsguy
 
+import android.animation.LayoutTransition
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
 import com.example.peter.jetnewsguy.ui.main.*
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,18 +18,22 @@ class MainActivity : AppCompatActivity() {
         NewsFragment("tech", "Tech News", R.drawable.tech_gradient)
     )
 
-    val newInitialPosition = 2
+    private val newInitialPosition = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, arrayFrag[newInitialPosition]).commit();
+
+        (main_frame as ViewGroup).layoutTransition
+            .enableTransitionType(LayoutTransition.DISAPPEARING)
+
+        supportFragmentManager.beginTransaction().replace(R.id.container, arrayFrag[newInitialPosition]).commit()
 
         bottom_nav_view.setNavigationChangeListener { _, position ->
             val frag=arrayFrag[position]
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
+            supportFragmentManager.beginTransaction().replace(R.id.container, frag).commit()
         }
 
 

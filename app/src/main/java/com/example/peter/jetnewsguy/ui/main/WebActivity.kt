@@ -3,9 +3,11 @@ package com.example.peter.jetnewsguy.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.bumptech.glide.Glide
+import com.airbnb.lottie.LottieDrawable
 import com.example.peter.jetnewsguy.R
 import kotlinx.android.synthetic.main.activity_web.*
 
@@ -19,26 +21,33 @@ class WebActivity : AppCompatActivity() {
         val url = intent.getStringExtra("link")
 
 
-        Glide.with(this)
-            .load(R.drawable.monkeyplace)
-            .into(image_view)
-
         val webView=web_view as WebView
 
+        lottieAnimationView.setAnimation(R.raw.cycleanimation)
+        lottieAnimationView.playAnimation()
+        lottieAnimationView.repeatMode= LottieDrawable.RESTART
+        lottieAnimationView.speed=2.5f
 
 
         webView.webViewClient=object : WebViewClient(){
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                image_view.visibility=View.GONE
+                lottieAnimationView.visibility=View.GONE
+            }
+        }
+
+        webView.webChromeClient=object : WebChromeClient(){
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                super.onProgressChanged(view, newProgress)
+                if(newProgress>= 80){
+                    lottieAnimationView.visibility=View.GONE
+                }
             }
         }
         webView.settings.javaScriptEnabled=true
+        webView.settings.cacheMode=WebSettings.LOAD_CACHE_ELSE_NETWORK
 
-
-        if(url !=null){
-            webView.loadUrl(url)
-        }
+        if(url !=null) webView.loadUrl(url)
  }
 
 }

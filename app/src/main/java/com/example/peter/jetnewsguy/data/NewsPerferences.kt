@@ -6,7 +6,7 @@ import com.example.peter.jetnewsguy.R
 
 object NewsPerferences {
 
-        fun getLastSyncTimeInMillis(context: Context): Long {
+        private fun getLastSyncTimeInMillis(context: Context): Long {
 
             val lastSyncKey = context.getString(R.string.pref_last_sync)
             val sp = PreferenceManager.getDefaultSharedPreferences(context)

@@ -1,9 +1,7 @@
 package com.example.peter.jetnewsguy
 
-import android.animation.LayoutTransition
 import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.peter.jetnewsguy.ui.main.*
 import kotlinx.android.synthetic.main.main_activity.*
@@ -24,9 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-
-        (main_frame as ViewGroup).layoutTransition
-            .enableTransitionType(LayoutTransition.DISAPPEARING)
 
         supportFragmentManager.beginTransaction().replace(R.id.container, arrayFrag[newInitialPosition]).commit()
 

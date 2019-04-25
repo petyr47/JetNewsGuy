@@ -39,8 +39,9 @@ class NewsFragment(private val type: String, private val head:String,private val
                 super.onScrolled(recyclerView, dx, dy)
 
                 if (dy>0 || dy<0){
-                    activity?.card_bar_container?.visibility=View.GONE
-                   activity?.bottom_nav_view?.visibility=View.GONE
+
+                    activity?.card_bar_container?.slideUpCard()
+                    activity?.bottom_nav_view?.slideDown(activity?.applicationContext)
 
                 }
             }
@@ -49,8 +50,10 @@ class NewsFragment(private val type: String, private val head:String,private val
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (newState==RecyclerView.SCROLL_STATE_IDLE){
-                    activity?.card_bar_container?.visibility=View.VISIBLE
-                    activity?.bottom_nav_view?.visibility=View.VISIBLE
+
+                    activity?.card_bar_container?.slideDownCard()
+                    activity?.bottom_nav_view?.slideUp(activity?.applicationContext)
+
                 }
 
             }

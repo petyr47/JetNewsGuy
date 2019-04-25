@@ -5,7 +5,6 @@
              android:layout_width="match_parent"
              android:id="@+id/main_frame"
              android:layout_height="match_parent"
-             android:animateLayoutChanges="true"
              tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
@@ -16,7 +15,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             app:cardCornerRadius="7dp"
-            app:cardElevation="7dp"
+            app:cardElevation="16dp"
             android:id="@+id/card_bar_container"
     >
 
@@ -25,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:cardCornerRadius="7dp"
-            app:cardElevation="7dp"
+            app:cardElevation="16dp"
             app:contentPadding="2dp"
             android:id="@+id/card_bar"
     >
